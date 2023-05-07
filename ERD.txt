@@ -1,0 +1,8 @@
+occurrenceType: Id, Name (Once, Daily, Weekly, Monthly, Annual)
+Client: Id, Name
+IncomingCategory: Id, Name, ClientId
+IncomingItem: Id, Name, IncomingCategoryId, Value, occurrenceType, StartDate, EndDate, WeekDay, occurrenceDay, ItemValue, ClientId
+IncomingBill: Id, IncomingItemId, CreationDate, Value, ClientId, IsCancelled
+OutcomingCategory: Id, Name, ClientId
+OutcomingItem: Id, Name, IncomingCategoryId, Value, occurrenceType, StartDate, EndDate, WeekDay, occurrenceDay, ItemValue, ClientId
+OutcomingBill: Id, IncomingItemId, CreationDate, Value, ClientId, IsCancelled

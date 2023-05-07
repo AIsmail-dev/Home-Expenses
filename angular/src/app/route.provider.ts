@@ -15,6 +15,27 @@ function configureRoutes(routesService: RoutesService) {
         order: 1,
         layout: eLayoutType.application,
       },
+      {
+        path: '/home-expenses',
+        name: '::Menu:HomeExpenses',
+        iconClass: 'fas fa-book',
+        order: 2,
+        layout: eLayoutType.application,
+      },
+      {
+        path: '/books',
+        name: '::Menu:Books',
+        parentName: '::Menu:HomeExpenses',
+        layout: eLayoutType.application,
+        requiredPolicy: 'HomeExpenses.Books',
+      },
+      {
+        path: '/authors',
+        name: '::Menu:Authors',
+        parentName: '::Menu:HomeExpenses',
+        layout: eLayoutType.application,
+        requiredPolicy: 'HomeExpenses.Authors',
+      },
     ]);
   };
 }

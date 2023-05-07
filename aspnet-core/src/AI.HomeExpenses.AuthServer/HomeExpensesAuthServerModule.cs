@@ -125,14 +125,19 @@ public class HomeExpensesAuthServerModule : AbpModule
         var dataProtectionBuilder = context.Services.AddDataProtection().SetApplicationName("HomeExpenses");
         if (!hostingEnvironment.IsDevelopment())
         {
-            var redis = ConnectionMultiplexer.Connect(configuration["Redis:Configuration"]);
+            var options = ConfigurationOptions.Parse(configuration["Redis:Host"]); // host1:port1, host2:port2, ...
+            options.Password = "redispw";
+            var redis = ConnectionMultiplexer.Connect(options);
             dataProtectionBuilder.PersistKeysToStackExchangeRedis(redis, "HomeExpenses-Protection-Keys");
         }
 
         context.Services.AddSingleton<IDistributedLockProvider>(sp =>
         {
-            var connection = ConnectionMultiplexer
-                .Connect(configuration["Redis:Configuration"]);
+            // var connection = ConnectionMultiplexer
+            //     .Connect(configuration["Redis:Configuration"]);
+            var options = ConfigurationOptions.Parse(configuration["Redis:Host"]); // host1:port1, host2:port2, ...
+            options.Password = "redispw";
+            var connection = ConnectionMultiplexer.Connect(options);
             return new RedisDistributedSynchronizationProvider(connection.GetDatabase());
         });
 

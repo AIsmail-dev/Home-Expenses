@@ -1,4 +1,5 @@
-﻿using AI.HomeExpenses.Books;
+﻿using AI.HomeExpenses.Authors;
+using AI.HomeExpenses.Books;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -48,6 +49,8 @@ public class HomeExpensesDbContext :
     public DbSet<IdentitySecurityLog> SecurityLogs { get; set; }
     public DbSet<IdentityLinkUser> LinkUsers { get; set; }
     public DbSet<Book> Books { get; set; }
+    public DbSet<Author> Authors { get; set; }
+
 
     // Tenant Management
     public DbSet<Tenant> Tenants { get; set; }
@@ -86,10 +89,27 @@ public class HomeExpensesDbContext :
         //});
         builder.Entity<Book>(b =>
         {
-            b.ToTable(HomeExpensesConsts.DbTablePrefix + "Books",
-                HomeExpensesConsts.DbSchema);
+            b.ToTable(HomeExpensesConsts.DbTablePrefix + "Books", HomeExpensesConsts.DbSchema);
             b.ConfigureByConvention(); //auto configure for the base class props
             b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+
+            // ADD THE MAPPING FOR THE RELATION
+            b.HasOne<Author>().WithMany().HasForeignKey(x => x.AuthorId).IsRequired();
         });
+
+        builder.Entity<Author>(b =>
+        {
+            b.ToTable(HomeExpensesConsts.DbTablePrefix + "Authors",
+                HomeExpensesConsts.DbSchema);
+            
+            b.ConfigureByConvention();
+            
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(AuthorConsts.MaxNameLength);
+
+            b.HasIndex(x => x.Name);
+        });
+
     }
 }

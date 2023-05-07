@@ -36,6 +36,13 @@ function configureRoutes(routesService: RoutesService) {
         layout: eLayoutType.application,
         requiredPolicy: 'HomeExpenses.Authors',
       },
+      {
+        path: '/incomingItems',
+        name: '::Menu:IncomingItems',
+        parentName: '::Menu:HomeExpenses',
+        layout: eLayoutType.application,
+        requiredPolicy: 'HomeExpenses.IncomingItems',
+      },
     ]);
   };
 }

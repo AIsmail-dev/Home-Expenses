@@ -1,5 +1,7 @@
 ﻿using AI.HomeExpenses.Authors;
 using AI.HomeExpenses.Books;
+using AI.HomeExpenses.Incomings;
+using AI.HomeExpenses.Outcomings;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -50,6 +52,13 @@ public class HomeExpensesDbContext :
     public DbSet<IdentityLinkUser> LinkUsers { get; set; }
     public DbSet<Book> Books { get; set; }
     public DbSet<Author> Authors { get; set; }
+    public DbSet<OccurenceType> OccurenceTypes { get; set; }
+    public DbSet<IncomingBill> IncomingBills { get; set; }
+    public DbSet<IncomingCategory> IncomingCategories { get; set; }
+    public DbSet<OutcomingItem> OutcomingItems { get; set; }
+    public DbSet<OutcomingBill> OutcomingBills { get; set; }
+    public DbSet<OutcomingCategory> OutcomingCategories { get; set; }
+    public DbSet<IncomingItem> IncomingItems { get; set; }
 
 
     // Tenant Management
@@ -109,6 +118,61 @@ public class HomeExpensesDbContext :
                 .HasMaxLength(AuthorConsts.MaxNameLength);
 
             b.HasIndex(x => x.Name);
+        });
+
+        builder.Entity<OccurenceType>(b =>
+        {
+            b.ToTable(HomeExpensesConsts.DbTablePrefix + "OccuenceTypes", HomeExpensesConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+        });
+
+        builder.Entity<IncomingCategory>(b =>
+        {
+            b.ToTable(HomeExpensesConsts.DbTablePrefix + "IncomingCategories", HomeExpensesConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+        });
+
+        builder.Entity<IncomingItem>(b =>
+        {
+            b.ToTable(HomeExpensesConsts.DbTablePrefix + "IncomingItems", HomeExpensesConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+
+            // ADD THE MAPPING FOR THE RELATION
+            b.HasOne<IncomingCategory>().WithMany().HasForeignKey(x => x.Id).IsRequired();
+            b.HasOne<OccurenceType>().WithMany().HasForeignKey(x => x.Id).IsRequired();
+        });
+
+        builder.Entity<IncomingBill>(b =>
+        {
+            b.ToTable(HomeExpensesConsts.DbTablePrefix + "IncomingBills", HomeExpensesConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+        });
+
+        builder.Entity<OutcomingCategory>(b =>
+        {
+            b.ToTable(HomeExpensesConsts.DbTablePrefix + "OutcomingCategories", HomeExpensesConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+        });
+
+        builder.Entity<OutcomingItem>(b =>
+        {
+            b.ToTable(HomeExpensesConsts.DbTablePrefix + "OutcomingItems", HomeExpensesConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+
+            // ADD THE MAPPING FOR THE RELATION
+            b.HasOne<OutcomingCategory>().WithMany().HasForeignKey(x => x.Id).IsRequired();
+            b.HasOne<OccurenceType>().WithMany().HasForeignKey(x => x.Id).IsRequired();
+        });
+
+        builder.Entity<OutcomingBill>(b =>
+        {
+            b.ToTable(HomeExpensesConsts.DbTablePrefix + "OutcomingBills", HomeExpensesConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
         });
 
     }

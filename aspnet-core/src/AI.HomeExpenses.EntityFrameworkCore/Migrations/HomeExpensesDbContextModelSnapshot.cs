@@ -19,7 +19,7 @@ namespace AI.HomeExpenses.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.SqlServer)
-                .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -140,6 +140,379 @@ namespace AI.HomeExpenses.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("AppBooks", (string)null);
+                });
+
+            modelBuilder.Entity("AI.HomeExpenses.Books.IncomingBill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<int>("IncomingItemId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("IncomingItemId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsCancelled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<DateTime>("OccurenceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("OccurenceValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IncomingItemId1");
+
+                    b.ToTable("AppIncomingBills", (string)null);
+                });
+
+            modelBuilder.Entity("AI.HomeExpenses.Books.IncomingCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppIncomingCategories", (string)null);
+                });
+
+            modelBuilder.Entity("AI.HomeExpenses.Books.IncomingItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<int>("IncomingCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("IncomingCategoryId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("ItemValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int>("OccuranceTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OccurenceDay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("OccurenceTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WeekDay")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IncomingCategoryId1");
+
+                    b.HasIndex("OccurenceTypeId");
+
+                    b.ToTable("AppIncomingItems", (string)null);
+                });
+
+            modelBuilder.Entity("AI.HomeExpenses.Books.OccurenceType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppOccuenceTypes", (string)null);
+                });
+
+            modelBuilder.Entity("AI.HomeExpenses.Books.OutcomingBill", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsCancelled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<DateTime>("OccurenceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("OccurenceValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("OutcomingItemId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("OutcomingItemId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OutcomingItemId1");
+
+                    b.ToTable("AppOutcomingBills", (string)null);
+                });
+
+            modelBuilder.Entity("AI.HomeExpenses.Books.OutcomingCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppOutcomingCategories", (string)null);
+                });
+
+            modelBuilder.Entity("AI.HomeExpenses.Books.OutcomingItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<decimal>("ItemValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<int>("OccuranceTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("OccurenceDay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("OccurenceTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("OutcomingCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("OutcomingCategoryId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WeekDay")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OccurenceTypeId");
+
+                    b.HasIndex("OutcomingCategoryId1");
+
+                    b.ToTable("AppOutcomingItems", (string)null);
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
@@ -1763,6 +2136,78 @@ namespace AI.HomeExpenses.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("AI.HomeExpenses.Books.IncomingBill", b =>
+                {
+                    b.HasOne("AI.HomeExpenses.Books.IncomingItem", "IncomingItem")
+                        .WithMany("IncomingBills")
+                        .HasForeignKey("IncomingItemId1");
+
+                    b.Navigation("IncomingItem");
+                });
+
+            modelBuilder.Entity("AI.HomeExpenses.Books.IncomingItem", b =>
+                {
+                    b.HasOne("AI.HomeExpenses.Books.IncomingCategory", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AI.HomeExpenses.Books.OccurenceType", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AI.HomeExpenses.Books.IncomingCategory", "IncomingCategory")
+                        .WithMany()
+                        .HasForeignKey("IncomingCategoryId1");
+
+                    b.HasOne("AI.HomeExpenses.Books.OccurenceType", "OccurenceType")
+                        .WithMany()
+                        .HasForeignKey("OccurenceTypeId");
+
+                    b.Navigation("IncomingCategory");
+
+                    b.Navigation("OccurenceType");
+                });
+
+            modelBuilder.Entity("AI.HomeExpenses.Books.OutcomingBill", b =>
+                {
+                    b.HasOne("AI.HomeExpenses.Books.OutcomingItem", "OutcomingItem")
+                        .WithMany()
+                        .HasForeignKey("OutcomingItemId1");
+
+                    b.Navigation("OutcomingItem");
+                });
+
+            modelBuilder.Entity("AI.HomeExpenses.Books.OutcomingItem", b =>
+                {
+                    b.HasOne("AI.HomeExpenses.Books.OccurenceType", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AI.HomeExpenses.Books.OutcomingCategory", null)
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AI.HomeExpenses.Books.OccurenceType", "OccurenceType")
+                        .WithMany()
+                        .HasForeignKey("OccurenceTypeId");
+
+                    b.HasOne("AI.HomeExpenses.Books.OutcomingCategory", "OutcomingCategory")
+                        .WithMany()
+                        .HasForeignKey("OutcomingCategoryId1");
+
+                    b.Navigation("OccurenceType");
+
+                    b.Navigation("OutcomingCategory");
+                });
+
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
                 {
                     b.HasOne("Volo.Abp.AuditLogging.AuditLog", null)
@@ -1903,6 +2348,11 @@ namespace AI.HomeExpenses.Migrations
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AI.HomeExpenses.Books.IncomingItem", b =>
+                {
+                    b.Navigation("IncomingBills");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

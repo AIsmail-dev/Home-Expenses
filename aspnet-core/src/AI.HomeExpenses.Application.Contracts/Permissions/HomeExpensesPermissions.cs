@@ -11,6 +11,14 @@ public static class HomeExpensesPermissions
         public const string Edit = Default + ".Edit";
         public const string Delete = Default + ".Delete";
     }
+
+    public static class IncomingItems
+    {
+        public const string Default = GroupName + ".IncomingItems";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
     
     // *** ADDED a NEW NESTED CLASS ***
     public static class Authors
